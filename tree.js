@@ -1,36 +1,21 @@
 'use strict';
 
-// Wrap everything in an anonymous function to avoid poluting the global namespace
 (function () {
 
   const defaultIntervalInMin = '5';
   let savedInfo;
   let unregisterHandlerFunctions = [];
-  // Use the jQuery document ready signal to know when everything has been initialized
   $(document).ready(function () {
-    // Tell Tableau we'd like to initialize our extension
-    tableau.extensions.initializeAsync({'configure': configure}).then(function() {    
-      // Once the extensions is initialized, ask the user to choose a sheet
+      tableau.extensions.initializeAsync({'configure': configure}).then(function() {    
       let currentSettings = tableau.extensions.settings.getAll();
       fetchFilter();
       fetchCurrentSettings();
       if (typeof currentSettings.sheet !== "undefined") {
         $('#inactive').hide();
         drawtree(currentSettings);
-        //updateExtensionBasedOnSettings(currentSettings.newSettings);
-        
-        
-               
       }
-      
-      //getLocation();
-      //showImage();
     });
   });
-
-  /**
-   * Shows the choose sheet UI. Once a sheet is selected, the data table for the sheet is shown
-   */
 
    let unregisterEventHandlerFunction;
 function drawtree(settings){
@@ -386,7 +371,7 @@ function fetchFilter() {
 
 
   function configure() { 
-      const popupUrl = `${window.location.origin}/Network/extensionDialog.html`;
+      const popupUrl = `${window.location.origin}/extensionDialog.html`;
     
       tableau.extensions.ui.displayDialogAsync(popupUrl, defaultIntervalInMin, { height: 500, width: 500 }).then((closePayload) => {
         $('#inactive').hide();
